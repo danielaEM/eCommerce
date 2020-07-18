@@ -1,0 +1,41 @@
+{% extends 'store/main.html' %} {% load static %} {% block content %}
+<div class="row">
+  <div class="col">
+    <div class="d-flex justify-content-center" id="searchContainer">
+      <form method="get">
+        {{filteredProducts.form}}
+        <button class="btn btn-outline-success" id="searchBtn" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  {% for product in products %}
+  <div class="col-sm-6 col-md-4 col-lg-3 product-container">
+    <img class="img-fluid thumbnail" src="{{product.imageURL}}" />
+    <div class="box-element product">
+      <h6><strong>{{product.name}}</strong></h6>
+      <hr />
+      <button
+        data-product="{{product.id}}"
+        data-action="add"
+        class="btn btn-outline-secondary update-cart"
+      >
+        Add to Cart
+      </button>
+      <a class="btn btn-outline-success" href="{% url 'product' product.id %}"
+        >View</a
+      >
+      <h6 style="float: right;">
+        <strong>${{product.price|floatformat:2}}</strong>
+      </h6>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}

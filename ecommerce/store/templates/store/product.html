@@ -1,0 +1,48 @@
+{% extends 'store/main.html' %} {% load static %} {% block content %}
+
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-6">
+    <img class="img-fluid" id="featured" src="{{product.imageURL}}" />
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-6">
+    <h1><strong>{{product.name}}</strong></h1>
+    <hr />
+    <strong>${{product.price|floatformat:2}}</strong>
+    <p id="description">{{product.description}}</p>
+    <input
+      min="1"
+      value="1"
+      type="number"
+      name="quantity"
+      id="jsAdd"
+      data-product="{{product.id}}"
+    />
+    <input
+      class="btn btn-outline-secondary"
+      type="submit"
+      value="Add to Cart"
+      id="jsSubmit"
+      onclick="addQuantity(); return 0"
+    />
+  </div>
+</div>
+
+<script type="text/javascript">
+  function addQuantity() {
+    let addItem = document.getElementById("jsAdd");
+    let value = addItem.value;
+
+    var productId = addItem.dataset.product;
+    var action = "add";
+    console.log("productId:", productId, "Action:", action);
+
+    console.log("USER:", user);
+
+    addCookieItem(productId, action, value);
+    updateUserOrder(productId, action, value);
+
+    location.reload();
+  }
+</script>
+
+{% endblock content %}
